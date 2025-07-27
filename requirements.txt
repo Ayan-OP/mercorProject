@@ -1,0 +1,21 @@
+fastapi==0.115.11
+uvicorn[standard]==0.32.1
+gunicorn==23.0.0
+pydantic==2.11.7
+pydantic-settings==2.7.0
+httpx==0.28.1
+python-dotenv==1.0.1
+pydantic-mongo==2.1.0
+pymongo==4.8.0
+pyyaml==6.0.2
+passlib[bcrypt]
+python-jose[cryptography]
+pydantic[email]
+python-multipart
+
+# Core dependencies that FastAPI 0.115.11 requires
+starlette>=0.40.0,<0.47.0
+typing-extensions>=4.8.0
+
+# Additional recommended packages for production
+annotated-types==0.7.0
