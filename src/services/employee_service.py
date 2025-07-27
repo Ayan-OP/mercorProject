@@ -1,7 +1,6 @@
 import uuid
 from db.mongo import get_db
 from typing import List, Optional
-from bson import ObjectId
 from datetime import datetime, timezone
 
 from schemas.auth import PasswordSet
