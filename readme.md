@@ -1,6 +1,6 @@
 # Mercor Time Tracker - Backend API
 
-This repository contains the backend API for the T3 Time Tracker application, designed to replicate the core functionalities of an employee time tracking and management system like Insightful. The API is built with FastAPI and MongoDB, focusing on performance, scalability, and data integrity.
+This repository contains the backend API for the mercor Time Tracker application, designed to replicate the core functionalities of an employee time tracking and management system like Insightful. The API is built with FastAPI and MongoDB, focusing on performance, scalability, and data integrity.
 
 ## 🏛️ Architecture & System Design
 
