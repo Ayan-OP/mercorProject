@@ -109,8 +109,9 @@ async def get_projects() -> List[ProjectInDB]:
     Retrieves a list of all non-archived projects.
     """
     db = await get_db()
+    query = {"archived": False}
     projects = []
-    cursor = db.projects.find({"archived": False})
+    cursor = db.projects.find(query)
     async for document in cursor:
         projects.append(ProjectInDB(**document))
     return projects

@@ -2,6 +2,7 @@ from datetime import datetime, timedelta, timezone
 from fastapi import Depends, HTTPException, status, Security
 from fastapi.security import OAuth2PasswordBearer, APIKeyHeader
 from jose import JWTError, jwt
+from typing import Optional
 
 from core.config import settings
 # Assuming TokenData is in a separate auth schema file
@@ -64,3 +65,33 @@ async def get_current_active_employee(
     if user is None or user.deactivated_at is not None:
         raise credentials_exception
     return user
+
+
+# --- FLEXIBLE Security Dependencies ---
+
+async def get_admin_api_key_optional(api_key: Optional[str] = Security(APIKeyHeader(name="X-API-Key", auto_error=False))):
+    """Optional admin key check. Returns key if valid, None otherwise."""
+    if api_key == settings.ADMIN_API_KEY:
+        return api_key
+    return None
+
+async def get_current_active_employee_optional(token: Optional[str] = Depends(OAuth2PasswordBearer(tokenUrl="/api/auth/login", auto_error=False))) -> Optional[EmployeeInDB]:
+    """Optional employee token check. Returns user if valid, None otherwise."""
+    if not token:
+        return None
+    try:
+        return await get_current_active_employee(token)
+    except HTTPException:
+        return None
+
+async def allow_admin_or_employee(
+    admin_key: Optional[str] = Depends(get_admin_api_key_optional),
+    employee: Optional[EmployeeInDB] = Depends(get_current_active_employee_optional)
+):
+    """
+    A flexible dependency for read-only routes.
+    Succeeds if either a valid admin key OR a valid employee token is provided.
+    """
+    if admin_key is None and employee is None:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Not authenticated")
+    return True # The actual return value doesn't matter, just that it doesn't raise an error.

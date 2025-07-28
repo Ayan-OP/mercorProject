@@ -92,3 +92,30 @@ class ProjectResponse(BaseModel):
             priorities=db_model.priorities,
             createdAt=int(db_model.createdAt.timestamp() * 1000)
         )
+        
+class ProjectSummaryResponse(BaseModel):
+    """
+    A simplified response model for listing tasks, showing only key info.
+    """
+    id: str
+    name: str
+    description: Optional[str] = None
+    billable: bool
+    employees: List[str]
+    archived: bool
+    statuses: List[str]
+    priorities: List[str]
+
+    @classmethod
+    def from_db_model(cls, db_model: ProjectInDB) -> "ProjectSummaryResponse":
+        """Converts the DB model to the summary response model."""
+        return cls(
+            id=db_model.id,
+            name=db_model.name,
+            description=db_model.description,
+            billable=db_model.billable,
+            employees=db_model.employees,
+            archived=db_model.archived,
+            statuses=db_model.statuses,
+            priorities=db_model.priorities,
+        )

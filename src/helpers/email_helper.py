@@ -9,7 +9,7 @@ async def send_invitation_email(to_email: str, token: str):
     Sends an invitation email to the new employee with their activation token.
     """
     # This is the URL for your frontend application's activation page
-    activation_url = f"http://localhost:3000/activate-account?token={token}"
+    activation_url = f"http://localhost:3000?token={token}"
 
     message = MIMEMultipart("alternative")
     message["Subject"] = "You're Invited to Join T3 Tracker"
@@ -19,7 +19,7 @@ async def send_invitation_email(to_email: str, token: str):
     # Create the plain-text and HTML version of your message
     text = f"""
     Hi,
-    You have been invited to join the T3 Time Tracker.
+    You have been invited to join the Mercor Time Tracker.
     Please activate your account by visiting the following link:
     {activation_url}
     """
@@ -27,7 +27,7 @@ async def send_invitation_email(to_email: str, token: str):
     <html>
       <body>
         <h2>Welcome!</h2>
-        <p>You have been invited to join the T3 Time Tracker.</p>
+        <p>You have been invited to join the Mercor Time Tracker.</p>
         <p>Please click the button below to activate your account and set your password.</p>
         <a href="{activation_url}" style="background-color: #4CAF50; color: white; padding: 14px 25px; text-align: center; text-decoration: none; display: inline-block; border-radius: 8px;">Activate Your Account</a>
         <p>If you cannot click the button, copy and paste this link into your browser:</p>
